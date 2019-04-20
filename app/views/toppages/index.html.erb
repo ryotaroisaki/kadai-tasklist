@@ -3,14 +3,30 @@
 <div class="row">
     <aside class="col-md-4">
       <%= form_for(@task) do |f| %>
+      
+      <% if @task.errors.any? %>
+        <div class="alert alert-warning">
+            <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @task.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+      <% end %>
+          </ul>
+        </div>
+    <% end %>
+  
+      
         <div class="form-group">
+          <p>タスク<p/>
           <%= f.text_area :content, class: 'form-control', rows: 5 %>
+          <p>ステータス</p>
           <%= f.text_area :status, class: 'form-control', rows: 5 %>
         </div>
         <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
       <% end %>
 
-</aside>
+    </aside>
+    
     <div class="col-xs-8">
       <%= render 'tasks/tasks', tasks: @tasks %>
     </div>
